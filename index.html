@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fever in a Returned Traveler - Enhanced Medical Education</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --font-sans: 'Inter', sans-serif;
+            --font-display: 'Space Grotesk', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            background-color: #f1f5f9; /* slate-100 */
+            background-image: radial-gradient(circle at 1px 1px, #e2e8f0 1px, transparent 0); /* slate-200 */
+            background-size: 20px 20px;
+            color: #334155; /* slate-700 */
+        }
+
+        .font-display { font-family: var(--font-display); }
+
+        .slide {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+            min-height: calc(100vh - 80px); /* Account for nav bar */
+        }
+
+        .slide.active {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .progress-bar-inner {
+            background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc);
+            background-size: 200% 100%;
+            animation: progress-shine 2s linear infinite;
+            transition: width 0.5s ease-in-out;
+        }
+
+        @keyframes progress-shine {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .quiz-option {
+            transition: all 0.2s ease-in-out;
+        }
+        .quiz-option:hover {
+            border-color: #38bdf8; /* sky-400 */
+            background-color: rgba(56, 189, 248, 0.1);
+        }
+        .quiz-option.correct {
+            background: rgba(52, 211, 153, 0.1); /* emerald-400/10 */
+            border-color: #34d399; /* emerald-400 */
+            color: #065f46; /* emerald-800 */
+        }
+        .quiz-option.incorrect {
+            background: rgba(248, 113, 113, 0.1); /* red-400/10 */
+            border-color: #f87171; /* red-400 */
+            color: #991b1b; /* red-800 */
+            animation: shake 0.5s ease-in-out;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-5px); }
+            75% { transform: translateX(5px); }
+        }
+
+        .drag-item {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .drag-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            border-color: #38bdf8;
+        }
+        .drag-item:active { cursor: grabbing; }
+
+        .drop-zone.drag-over {
+            border-color: #38bdf8;
+            background: rgba(56, 189, 248, 0.1);
+            transform: scale(1.02);
+        }
+
+        /* Custom focus styles for better accessibility */
+        .btn:focus-visible, .quiz-option:focus-visible, .tab-button:focus-visible, textarea:focus-visible {
+            outline: 2px solid #38bdf8;
+            outline-offset: 2px;
+        }
+        textarea:focus {
+            border-color: #38bdf8;
+            box-shadow: 0 0 0 1px #38bdf8;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #e2e8f0; }
+        ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #64748b; }
+
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+
+    <!-- Main Session Container -->
+    <div id="session-container" class="w-full max-w-7xl mx-auto bg-white/70 backdrop-blur-xl border border-slate-200 rounded-2xl shadow-2xl flex flex-col overflow-hidden" style="height: calc(100vh - 2rem);">
+        
+        <div class="flex-grow overflow-y-auto">
+            <!-- SLIDE 1: WELCOME -->
+            <div id="slide-1" class="slide active flex-col items-center justify-center p-6 md:p-12 text-center">
+                <div class="max-w-4xl">
+                    <div class="inline-flex items-center justify-center w-16 h-16 mb-6 bg-sky-500/10 border border-sky-500/20 rounded-2xl text-sky-500 text-3xl">🌡️</div>
+                    <h1 class="text-4xl md:text-6xl font-bold font-display mb-4 text-slate-900">Fever in a Returned Traveler</h1>
+                    <p class="text-xl md:text-2xl mb-10 text-slate-600">An Interactive Module for Clinical Excellence</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left mb-10">
+                        <div class="bg-slate-100/50 border border-slate-200 rounded-2xl p-6">
+                            <h3 class="font-bold text-lg text-slate-900 mb-3">🎯 Learning Objectives</h3>
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-500 shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg>Master a systematic diagnostic approach.</li>
+                                <li class="flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-500 shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg>Rapidly identify life-threatening diagnoses.</li>
+                                <li class="flex items-center gap-3"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-sky-500 shrink-0"><polyline points="20 6 9 17 4 12"></polyline></svg>Integrate travel history with clinical findings.</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-100/50 border border-slate-200 rounded-2xl p-6">
+                            <h3 class="font-bold text-lg text-slate-900 mb-3">⏱️ 45-Minute Journey</h3>
+                            <ul class="space-y-2 text-sm">
+                                <li class="flex justify-between"><span>Activation & Assessment</span> <span class="font-semibold text-slate-500">5 min</span></li>
+                                <li class="flex justify-between"><span>Framework Building</span> <span class="font-semibold text-slate-500">15 min</span></li>
+                                <li class="flex justify-between"><span>Case Practice</span> <span class="font-semibold text-slate-500">20 min</span></li>
+                                <li class="flex justify-between"><span>Synthesis & Planning</span> <span class="font-semibold text-slate-500">5 min</span></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="bg-red-100/50 border border-red-200 rounded-lg p-4 mb-10 flex items-center gap-4 max-w-md mx-auto">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-red-500 shrink-0"><path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><line x1="12" x2="12" y1="9" y2="13"></line><line x1="12" x2="12.01" y1="17" y2="17"></line></svg>
+                        <p class="text-red-800 text-sm"><strong>Critical Reminder:</strong> This is a medical emergency where every minute matters.</p>
+                    </div>
+
+                    <button id="start-btn" class="btn bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition-colors">Begin Learning Journey</button>
+                </div>
+            </div>
+
+            <!-- SLIDE 2: PRE-ASSESSMENT -->
+            <div id="slide-2" class="slide flex-col items-center justify-center p-6 md:p-12">
+                <div class="w-full max-w-4xl text-center">
+                    <h2 class="text-3xl md:text-4xl font-bold font-display mb-2 text-slate-900">Activate Your Expertise</h2>
+                    <p class="text-lg mb-8 text-slate-600">A 25-yr old construction worker returns from South India with high fever. What's your immediate thought process?</p>
+                    
+                    <div id="timer-container" class="mb-8 bg-slate-100 border border-slate-200 rounded-xl p-6 max-w-sm mx-auto">
+                        <p class="text-sm text-sky-600 font-semibold">Optional Reflection Time</p>
+                        <div id="thinking-timer" class="text-5xl font-bold font-display text-slate-900">1:30</div>
+                    </div>
+                    
+                    <div class="bg-slate-100/50 border border-slate-200 rounded-2xl p-6 text-left">
+                        <label for="reflection-1" class="font-bold text-lg text-slate-900 mb-3 block">My Differential Diagnosis & Initial Steps</label>
+                        <textarea id="reflection-1" class="w-full p-3 bg-white border-2 border-slate-300 rounded-lg text-slate-800 transition-all" rows="6" placeholder="Jot down your differential diagnosis, key questions, and priority investigations..."></textarea>
+                        <button id="ai-feedback-btn" class="hidden mt-4 btn bg-indigo-500 hover:bg-indigo-600 text-white font-bold py-2 px-4 rounded-lg w-full transition-all">
+                            Ask AI Clinical Consultant for Feedback
+                        </button>
+                        <div id="ai-response-container" class="hidden mt-4 p-4 bg-indigo-50 border border-indigo-200 rounded-lg">
+                            <!-- AI response will be injected here -->
+                        </div>
+                    </div>
+
+                    <div id="thinking-complete" class="hidden text-center mt-8">
+                         <p class="text-emerald-600 font-semibold">Great! Let's build on that.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- SLIDE 3: CORE PRINCIPLE -->
+            <div id="slide-3" class="slide flex-col items-center justify-center p-6 md:p-12 text-center">
+                <div class="w-full max-w-4xl">
+                    <h2 class="text-3xl md:text-4xl font-bold font-display mb-2 text-red-600">The Golden Rule</h2>
+                    <p class="text-xl mb-8 text-slate-600">The one diagnosis you cannot afford to miss.</p>
+
+                    <div class="bg-red-50 border-2 border-red-200 rounded-2xl p-8 md:p-12 mb-8 shadow-2xl shadow-red-500/10">
+                        <p class="text-5xl md:text-6xl font-bold font-display text-slate-900 mb-4">"Malaria until proven otherwise"</p>
+                        <p class="text-xl text-red-700"><strong>P. falciparum</strong> is the #1 infectious killer in returned travelers. Death can occur within 24-48 hours.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
+                        <div class="bg-slate-100/50 border border-slate-200 rounded-2xl p-6">
+                            <h3 class="font-bold text-lg text-slate-900 mb-3">🌏 Geographic Context</h3>
+                            <ul class="space-y-2 text-base list-disc list-inside text-slate-600">
+                                <li>Large <strong class="text-slate-700">VFR population</strong> (highest risk group)</li>
+                                <li>Travel to <strong class="text-slate-700">malaria-endemic</strong> regions is common</li>
+                                <li><strong class="text-slate-700">Dengue & Enteric Fever</strong> are also key differentials</li>
+                            </ul>
+                        </div>
+                        <div class="bg-slate-100/50 border border-slate-200 rounded-2xl p-6">
+                            <h3 class="font-bold text-lg text-sky-600 mb-3">⚡ Immediate Actions</h3>
+                            <ul class="space-y-2 text-base list-disc list-inside text-slate-600">
+                                <li class="font-bold text-slate-700">Rapidly assess for sepsis (qSOFA)</li>
+                                <li><strong class="text-slate-700">STAT</strong> thick & thin blood films</li>
+                                <li>Malaria RDT <strong class="text-slate-700">(if available)</strong></li>
+                                <li>FBC, renal/liver function</li>
+                             </ul>
+                        </div>
+                    </div>
+                     <div class="mt-6 bg-amber-100/60 border border-amber-200 rounded-lg p-4 flex items-start gap-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-amber-600 shrink-0 mt-0.5"><path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path><path d="m9 12 2 2 4-4"></path></svg>
+                        <div>
+                            <h4 class="font-bold text-amber-800">Clinical Pearl</h4>
+                            <p class="text-amber-700 text-sm">Prophylaxis doesn't guarantee protection and can alter presentation (e.g., longer incubation, milder symptoms). Maintain high suspicion even if the patient reports taking it.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 4: SCT 1 -->
+            <div id="slide-4" class="slide flex-col items-center justify-center p-6 md:p-12">
+                <div class="w-full max-w-4xl">
+                    <div class="text-center mb-6">
+                        <h2 class="text-3xl md:text-4xl font-bold font-display mb-2 text-slate-900">Clinical Reasoning Challenge</h2>
+                        <p class="text-lg text-slate-600">A Script Concordance Test on Prophylaxis</p>
+                    </div>
+                    <div class="bg-slate-100/50 border border-slate-200 rounded-2xl p-6">
+                        <div class="text-center space-y-3 mb-6">
+                            <p><strong>Scenario:</strong> A traveler from Nigeria has a fever. You are strongly considering malaria.</p>
+                            <p><strong>New Information:</strong> The patient insists they took their malaria prophylaxis perfectly.</p>
+                            <p class="font-bold text-lg text-slate-800 mt-2">This new information makes your hypothesis of malaria...</p>
+                        </div>
+                        <div id="sct-1-options" class="grid grid-cols-5 gap-2 text-center text-sm font-semibold">
+                            <button class="quiz-option p-3 rounded-lg border-2 border-slate-300" onclick="answerSCT(1, this, -2)">(-2)<br>Much Less Likely</button>
+                            <button class="quiz-option p-3 rounded-lg border-2 border-slate-300" onclick="answerSCT(1, this, -1)">(-1)<br>Less Likely</button>
+                            <button class="quiz-option p-3 rounded-lg border-2 border-slate-300" onclick="answerSCT(1, this, 0)"> (0)<br>No Change</button>
+                            <button class="quiz-option p-3 rounded-lg border-2 border-slate-300" onclick="answerSCT(1, this, 1)">(+1)<br>More Likely</button>
+                            <button class="quiz-option p-3 rounded-lg border-2 border-slate-300" onclick="answerSCT(1, this, 2)">(+2)<br>Much More Likely</button>
+                        </div>
+                        <div id="sct-1-feedback" class="hidden mt-4 text-sm p-4 rounded-lg"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 5: THE DETAILED HISTORY -->
+            <div id="slide-5" class="slide flex-col items-center justify-center p-6 md:p-12">
+                <div class="w-full max-w-5xl">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl md:text-4xl font-bold font-display mb-2 text-slate-900">The Detailed History</h2>
+                        <p class="text-lg text-slate-600">Your history is the most powerful diagnostic tool. Ask about everything.</p>
+                    </div>
+                    <div class="bg-slate-100/50 border border-slate-200 rounded-2xl p-6">
+                        <h3 class="font-bold text-xl text-slate-800 mb-4 text-center">Key Historical Clues Checklist</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+                            <div>
+                                <h4 class="font-semibold text-sky-600 border-b border-sky-200 pb-1 mb-2">Travel & Meds</h4>
+                                <ul class="space-y-1 text-sm list-disc list-inside">
+                                    <li>Day-by-day itinerary (urban vs. rural)</li>
+                                    <li>Vaccinations and malaria prophylaxis taken</li>
+                                    <li>Other drugs (e.g., antibiotics altering presentation)</li>
+                                    <li>Immune status (diabetes, steroids, splenectomy)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-amber-600 border-b border-amber-200 pb-1 mb-2">Food & Water Exposures</h4>
+                                <ul class="space-y-1 text-sm list-disc list-inside">
+                                    <li>Unclean water or unpasteurized milk</li>
+                                    <li>Improperly cooked or raw food (meat, fish)</li>
+                                    <li>Fresh water swimming/rafting (rivers, lakes)</li>
+                                    <li>Skin contact with soil (walking barefoot)</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-red-600 border-b border-red-200 pb-1 mb-2">Bites & Animals</h4>
+                                <ul class="space-y-1 text-sm list-disc list-inside">
+                                    <li>Insect bites (mosquitoes, ticks, mites, flies)</li>
+                                    <li>Animal bites (dogs, monkeys, bats)</li>
+                                    <li>Close contact with animals (domestic or wild)</li>
+                                    <li>Close contact with wild or pet birds</li>
+                                </ul>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-purple-600 border-b border-purple-200 pb-1 mb-2">Personal & Social Contact</h4>
+                                <ul class="space-y-1 text-sm list-disc list-inside">
+                                    <li>Visits with ill relatives or friends</li>
+                                    <li>Sexual contact (new partners)</li>
+                                    <li>Tattoos, piercings, IV drug use</li>
+                                    <li>Medical procedures abroad (blood transfusions)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 6: SPECIAL POPULATIONS -->
+            <div id="slide-6" class="slide flex-col items-center justify-center p-6 md:p-12">
+                <div class="w-full max-w-5xl">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl md:text-4xl font-bold font-display mb-2 text-slate-900">Beyond the Itinerary: Special Populations</h2>
+                        <p class="text-lg text-slate-600">Different travelers carry different risks. Match the traveler to their typical risk profile.</p>
+                    </div>
+                    <div class="bg-slate-100/50 border border-slate-200 rounded-2xl p-6">
+                        <div id="population-quiz" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <!-- Traveler Profiles -->
+                            <div class="space-y-4">
+                                <div class="font-bold text-lg text-center text-slate-800 pb-2 border-b border-slate-300">Traveler Profile</div>
+                                <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer text-center" onclick="selectPopulation(this, 'vfr')">Visiting Friends/Relatives (VFR)</div>
+                                <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer text-center" onclick="selectPopulation(this, 'expatriate')">Expatriate (Long-Term Stay)</div>
+                                <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer text-center" onclick="selectPopulation(this, 'older')">Older Adult (>60 years)</div>
+                            </div>
+                            <!-- Risk Profiles -->
+                            <div class="space-y-4">
+                                <div class="font-bold text-lg text-center text-slate-800 pb-2 border-b border-slate-300">Highest-Yield Diagnosis Group</div>
+                                <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer text-center" onclick="selectRisk(this, 'expatriate')">Chronic Infections (Schistosomiasis, Strongyloides)</div>
+                                <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer text-center" onclick="selectRisk(this, 'older')">Severe Malaria & Lower Respiratory Infections</div>
+                                <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer text-center" onclick="selectRisk(this, 'vfr')">Acute Tropical Infections (Malaria, Enteric Fever)</div>
+                            </div>
+                        </div>
+                         <div id="population-feedback" class="hidden mt-4 text-sm p-4 rounded-lg text-center"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 7: KEY PHYSICAL FINDINGS -->
+            <div id="slide-7" class="slide flex-col items-center justify-center p-6 md:p-12">
+                 <div class="w-full max-w-4xl">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl md:text-4xl font-bold font-display mb-2 text-slate-900">Don't Miss This Sign: The Eschar</h2>
+                        <p class="text-lg text-slate-600">A thorough skin exam is critical.</p>
+                    </div>
+                     <div class="bg-slate-100/50 border border-slate-200 rounded-2xl p-6">
+                        <div class="mb-6 p-4 bg-slate-200/50 rounded-lg text-slate-700 text-center">
+                           <strong>Scenario:</strong> During your exam of a patient returning from Southeast Asia, you find a painless, dark, crusted lesion in the groin.
+                        </div>
+                        <div id="eschar-question">
+                            <p class="font-bold text-lg text-slate-900 mb-4 text-center">What diagnosis does this strongly suggest?</p>
+                            <div class="space-y-3 max-w-md mx-auto">
+                                <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer" onclick="answerEschar(this, false)">Cutaneous Leishmaniasis</div>
+                                <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer" onclick="answerEschar(this, true)">Scrub Typhus (a Rickettsial disease)</div>
+                                <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer" onclick="answerEschar(this, false)">Cutaneous Anthrax</div>
+                            </div>
+                        </div>
+                        <div id="eschar-feedback" class="hidden mt-4 text-sm p-4 rounded-lg"></div>
+                     </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 8: HIGH-RISK PATHOGENS -->
+            <div id="slide-8" class="slide flex-col items-center justify-center p-6 md:p-12">
+                 <div class="w-full max-w-5xl">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl md:text-4xl font-bold font-display mb-2 text-slate-900">Recognizing High-Risk Pathogens</h2>
+                        <p class="text-lg text-slate-600">Identify infections that pose a risk to healthcare workers and the public.</p>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="bg-red-100/50 border-l-4 border-red-500 p-4">
+                            <h3 class="font-bold text-red-800">Viral Hemorrhagic Fevers (e.g., Ebola, Lassa)</h3>
+                            <p class="text-sm text-red-700">Suspect with travel to endemic areas (West/Central Africa) within 21 days + fever. Requires immediate isolation and strict barrier nursing.</p>
+                        </div>
+                        <div class="bg-sky-100/60 border-l-4 border-sky-500 p-4">
+                            <h3 class="font-bold text-sky-800">Severe Respiratory Viruses (e.g., MERS-CoV, Avian Influenza)</h3>
+                            <p class="text-sm text-sky-700">Suspect with travel to outbreak areas (e.g., Arabian Peninsula for MERS) + respiratory symptoms. Requires airborne precautions.</p>
+                        </div>
+                        <div class="bg-amber-100/60 border-l-4 border-amber-500 p-4">
+                            <h3 class="font-bold text-amber-800">Other Transmissible Diseases</h3>
+                            <p class="text-sm text-amber-700">Don't forget measles, chickenpox, and pulmonary tuberculosis. These are more common and also require prompt isolation to prevent nosocomial spread.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 9: FRAMEWORK DEEP DIVE -->
+            <div id="slide-9" class="slide flex-col items-center p-6 md:p-12">
+                 <div class="w-full max-w-6xl">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl md:text-4xl font-bold font-display mb-2 text-slate-900">Your Diagnostic Framework</h2>
+                        <p class="text-xl text-slate-600">Master the three pillars of diagnosis.</p>
+                    </div>
+                    <div class="flex justify-center border-b border-slate-200 mb-6">
+                        <button class="framework-tab-button active text-sky-500 border-b-2 border-sky-500 px-6 py-3 font-semibold text-lg" data-tab="timing">1. Timing</button>
+                        <button class="framework-tab-button text-slate-500 border-b-2 border-transparent px-6 py-3 font-semibold text-lg" data-tab="geography">2. Geography</button>
+                        <button class="framework-tab-button text-slate-500 border-b-2 border-transparent px-6 py-3 font-semibold text-lg" data-tab="syndromes">3. Syndromes</button>
+                    </div>
+                    
+                    <!-- Timing Content -->
+                    <div id="timing" class="framework-tab-content">
+                        <p class="text-center mb-6 text-lg">Incubation period is your diagnostic compass. Drag diseases to the correct timeline.</p>
+                        <div class="bg-slate-100/50 border border-slate-200 rounded-xl p-6">
+                            <div id="drag-items-container" class="flex justify-center gap-4 mb-8 flex-wrap">
+                                <div class="drag-item p-3 rounded-lg shadow-lg bg-white border border-slate-300 cursor-grab text-base" draggable="true" data-disease="Dengue" data-correct="short">🦟 Dengue</div>
+                                <div class="drag-item p-3 rounded-lg shadow-lg bg-white border border-slate-300 cursor-grab text-base" draggable="true" data-disease="Hepatitis A" data-correct="intermediate">🍽️ Hepatitis A</div>
+                                <div class="drag-item p-3 rounded-lg shadow-lg bg-white border border-slate-300 cursor-grab text-base" draggable="true" data-disease="Tuberculosis" data-correct="long">🫁 Tuberculosis</div>
+                                <div class="drag-item p-3 rounded-lg shadow-lg bg-white border border-slate-300 cursor-grab text-base" draggable="true" data-disease="Rickettsial" data-correct="short">🕷️ Rickettsial</div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div class="drop-zone p-4 rounded-lg text-center min-h-[120px] border-2 border-dashed border-slate-300 transition-all" data-period="short">
+                                    <h4 class="font-bold text-red-600 text-lg">&lt; 2 Weeks</h4>
+                                </div>
+                                <div class="drop-zone p-4 rounded-lg text-center min-h-[120px] border-2 border-dashed border-slate-300 transition-all" data-period="intermediate">
+                                    <h4 class="font-bold text-amber-600 text-lg">2-6 Weeks</h4>
+                                </div>
+                                <div class="drop-zone p-4 rounded-lg text-center min-h-[120px] border-2 border-dashed border-slate-300 transition-all" data-period="long">
+                                    <h4 class="font-bold text-sky-600 text-lg">&gt; 6 Weeks</h4>
+                                </div>
+                            </div>
+                            <div id="timing-feedback" class="hidden mt-4 text-center text-emerald-600 font-semibold">Challenge Complete! Well done.</div>
+                             <div id="timing-pearl" class="hidden mt-4 bg-sky-100/60 border border-sky-200 rounded-lg p-3 text-sm text-sky-700 text-center max-w-2xl mx-auto">
+                                <strong>Pro Tip:</strong> Malaria prophylaxis can prolong incubation periods beyond the typical window. Always ask about adherence!
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Geography Content -->
+                    <div id="geography" class="framework-tab-content hidden">
+                        <p class="text-center mb-6 text-lg">Location + Activity = Diagnostic Gold. Use the WATERS mnemonic.</p>
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                            <div class="bg-slate-100/50 border border-slate-200 rounded-xl p-6">
+                                <h3 class="font-bold text-xl text-slate-900 mb-4">💧 The WATERS Mnemonic</h3>
+                                <ul class="space-y-2 text-base text-slate-600">
+                                    <li><strong>W</strong>ater (fresh): Schistosomiasis, Leptospirosis</li>
+                                    <li><strong>A</strong>rthropods: Malaria, Dengue, Rickettsia</li>
+                                    <li><strong>T</strong>ravel itinerary: Geographic disease patterns</li>
+                                    <li><strong>E</strong>ating/drinking: Enteric fever, Hepatitis</li>
+                                    <li><strong>R</strong>elatives/friends (VFR): <span class="text-red-600 font-bold">Highest risk!</span></li>
+                                    <li><strong>S</strong>exual/needles: HIV, Hepatitis B/C</li>
+                                </ul>
+                            </div>
+                             <div id="geo-quiz-container" class="bg-slate-100/50 border border-slate-200 rounded-xl p-6">
+                                <h3 class="font-bold text-xl text-slate-900 mb-4">🎯 Quick Challenge</h3>
+                                <p class="mb-4 text-base text-slate-600">Which traveler has the highest malaria risk?</p>
+                                <div class="space-y-3">
+                                    <div class="quiz-option p-3 rounded-lg border-2 border-slate-300 cursor-pointer text-base" onclick="checkGeoAnswer(this, false)">🏨 Tourist in air-conditioned Bangkok hotel</div>
+                                    <div class="quiz-option p-3 rounded-lg border-2 border-slate-300 cursor-pointer text-base" onclick="checkGeoAnswer(this, true)">🏠 VFR staying with family in rural Ghana</div>
+                                    <div class="quiz-option p-3 rounded-lg border-2 border-slate-300 cursor-pointer text-base" onclick="checkGeoAnswer(this, false)">✈️ Business traveler, 3 days in Singapore</div>
+                                </div>
+                                <div id="geo-feedback" class="hidden mt-4 text-sm p-3 rounded-lg bg-emerald-100/60 border border-emerald-200 text-emerald-800">
+                                    <strong>Correct!</strong> VFRs have 8x higher risk due to longer stays, rural exposure, and often no prophylaxis.
+                                </div>
+                            </div>
+                        </div>
+                         <div id="geo-pearl" class="hidden mt-4 bg-sky-100/60 border border-sky-200 rounded-lg p-3 text-sm text-sky-700 text-center">
+                            <strong>Key Insight:</strong> Urban vs. Rural exposure is a critical distinction. Many diseases (like malaria, rickettsia, and leishmaniasis) are far more common in rural areas, while others (like dengue) thrive in urban environments.
+                        </div>
+                    </div>
+
+                    <!-- Syndromes Content -->
+                    <div id="syndromes" class="framework-tab-content hidden">
+                        <p class="text-center mb-6 text-lg">Pattern recognition accelerates diagnosis.</p>
+                         <div class="bg-slate-100/50 border border-slate-200 rounded-xl p-6">
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                                <div class="p-4 bg-white rounded-lg border-l-4 border-red-500 shadow">
+                                    <h4 class="font-bold text-slate-900 text-lg">Undifferentiated Fever</h4>
+                                    <p class="text-sm text-slate-500">Malaria, Enteric Fever, Dengue</p>
+                                </div>
+                                <div class="p-4 bg-white rounded-lg border-l-4 border-amber-500 shadow">
+                                    <h4 class="font-bold text-slate-900 text-lg">Fever + Rash</h4>
+                                    <p class="text-sm text-slate-500">Rickettsia, Dengue, Meningococcus</p>
+                                </div>
+                                <div class="p-4 bg-white rounded-lg border-l-4 border-sky-500 shadow">
+                                    <h4 class="font-bold text-slate-900 text-lg">Fever + GI</h4>
+                                    <p class="text-sm text-slate-500">Enteric Fever, Amebic Abscess, Hepatitis A/E</p>
+                                </div>
+                                <div class="p-4 bg-white rounded-lg border-l-4 border-emerald-500 shadow">
+                                    <h4 class="font-bold text-slate-900 text-lg">Fever + Eosinophilia</h4>
+                                    <p class="text-sm text-slate-500">Schistosomiasis, Strongyloides</p>
+                                </div>
+                            </div>
+                             <div class="mt-6 bg-sky-100/60 border border-sky-200 rounded-lg p-3 text-sm text-sky-700 text-center">
+                                <strong>Takeaway:</strong> Use syndromes to build your differential, but remember that classic presentations are not guaranteed. Always circle back to the 'must not miss' diagnoses like malaria.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 10: SCT 2 -->
+            <div id="slide-10" class="slide flex-col items-center justify-center p-6 md:p-12">
+                <div class="w-full max-w-4xl">
+                    <div class="text-center mb-6">
+                        <h2 class="text-3xl md:text-4xl font-bold font-display mb-2 text-slate-900">Clinical Reasoning Challenge</h2>
+                        <p class="text-lg text-slate-600">An SCT on Integrating Clues</p>
+                    </div>
+                    <div class="bg-slate-100/50 border border-slate-200 rounded-2xl p-6">
+                        <div class="text-center space-y-3 mb-6">
+                            <p><strong>Scenario:</strong> A patient back from SE Asia has a fever and significant eosinophilia. You suspect a helminth infection.</p>
+                            <p><strong>New Information:</strong> They mention swimming in a freshwater lake in Laos 4 weeks before symptoms began.</p>
+                            <p class="font-bold text-lg text-slate-800 mt-2">This new information makes the diagnosis of acute schistosomiasis...</p>
+                        </div>
+                        <div id="sct-2-options" class="grid grid-cols-5 gap-2 text-center text-sm font-semibold">
+                            <button class="quiz-option p-3 rounded-lg border-2 border-slate-300" onclick="answerSCT(2, this, -2)">(-2)<br>Much Less Likely</button>
+                            <button class="quiz-option p-3 rounded-lg border-2 border-slate-300" onclick="answerSCT(2, this, -1)">(-1)<br>Less Likely</button>
+                            <button class="quiz-option p-3 rounded-lg border-2 border-slate-300" onclick="answerSCT(2, this, 0)"> (0)<br>No Change</button>
+                            <button class="quiz-option p-3 rounded-lg border-2 border-slate-300" onclick="answerSCT(2, this, 1)">(+1)<br>More Likely</button>
+                            <button class="quiz-option p-3 rounded-lg border-2 border-slate-300" onclick="answerSCT(2, this, 2)">(+2)<br>Much More Likely</button>
+                        </div>
+                        <div id="sct-2-feedback" class="hidden mt-4 text-sm p-4 rounded-lg"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 11: BEYOND THE TROPICS & AMR -->
+            <div id="slide-11" class="slide flex-col items-center justify-center p-6 md:p-12">
+                <div class="w-full max-w-5xl">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl md:text-4xl font-bold font-display mb-2 text-slate-900">When It's Not "Tropical"</h2>
+                        <p class="text-lg text-slate-600">Your initial workup for malaria, dengue, and enteric fever is negative. What's next?</p>
+                    </div>
+                    <div class="bg-slate-100/50 border border-slate-200 rounded-2xl p-6">
+                        <p class="font-bold text-lg text-slate-900 mb-4 text-center">What common "cosmopolitan" causes are still on your differential? (Click to reveal)</p>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                            <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer text-center" onclick="this.innerHTML = 'Pneumonia, Bronchitis'; this.classList.add('correct');">Respiratory Tract Infection</div>
+                            <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer text-center" onclick="this.innerHTML = 'Cystitis, Pyelonephritis'; this.classList.add('correct');">Urinary Tract Infection</div>
+                            <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer text-center" onclick="this.innerHTML = 'Meningitis, Bacteremia'; this.classList.add('correct');">Meningococcal Disease</div>
+                        </div>
+                        <div class="bg-amber-100/60 border-l-4 border-amber-500 p-4">
+                            <h3 class="font-bold text-amber-800">An Emerging Threat: Antimicrobial Resistance (AMR)</h3>
+                            <p class="text-sm text-amber-700">Be highly suspicious of resistant organisms (e.g., ESBL-producing bacteria) in patients who were hospitalized or received antibiotics while traveling, especially in South/Southeast Asia. This may require broader-spectrum empirical antibiotics.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 12: CASE 1 -->
+            <div id="slide-12" class="slide flex-col items-center justify-center p-6 md:p-12">
+                <div class="w-full max-w-4xl">
+                     <div class="bg-slate-100/50 border border-slate-200 rounded-2xl p-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <span class="flex items-center justify-center w-10 h-10 rounded-full bg-red-500 text-white font-bold text-lg">1</span>
+                            <h2 class="text-2xl font-bold font-display text-slate-900">Case: The Classic Emergency</h2>
+                            <span class="ml-auto text-xs font-bold uppercase text-red-600 bg-red-100 px-3 py-1 rounded-full">High Acuity</span>
+                        </div>
+                        <div class="mb-6 p-4 bg-slate-200/50 rounded-lg text-slate-700">
+                            <strong>History:</strong> 28M, 4 days of high fever, rigors, headache. Returned 10 days ago from Ghana. "Took prophylaxis most of the time."
+                        </div>
+                        <div id="case-1-question">
+                            <p class="font-bold text-lg text-slate-900 mb-4">What is your immediate priority?</p>
+                            <div class="space-y-3">
+                                <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer" onclick="answerCase(1, this, false)">Order dengue serology and NS1 antigen</div>
+                                <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer" onclick="answerCase(1, this, true)">STAT thick & thin blood films + malaria RDT</div>
+                                <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer" onclick="answerCase(1, this, false)">Start empirical antibiotics for enteric fever</div>
+                            </div>
+                        </div>
+                        <div id="case-1-feedback" class="hidden mt-4 text-sm p-4 rounded-lg"></div>
+                     </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 13: CASE 2 -->
+            <div id="slide-13" class="slide flex-col items-center justify-center p-6 md:p-12">
+                 <div class="w-full max-w-4xl">
+                     <div class="bg-slate-100/50 border border-slate-200 rounded-2xl p-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <span class="flex items-center justify-center w-10 h-10 rounded-full bg-amber-500 text-white font-bold text-lg">2</span>
+                            <h2 class="text-2xl font-bold font-display text-slate-900">Case: The Confounder</h2>
+                            <span class="ml-auto text-xs font-bold uppercase text-amber-600 bg-amber-100 px-3 py-1 rounded-full">Moderate Acuity</span>
+                        </div>
+                        <div class="mb-6 p-4 bg-slate-200/50 rounded-lg text-slate-700">
+                            <strong>History:</strong> 35F, 7 days fever, faint rash, and <strong class="text-amber-600">severe, disabling arthralgia</strong> in hands/feet. Returned 3 weeks ago from Indonesia.
+                        </div>
+                        <div id="case-2-question">
+                            <p class="font-bold text-lg text-slate-900 mb-4">The severe arthralgia is the key clue. Which diagnosis fits best?</p>
+                            <div class="space-y-3">
+                                <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer" onclick="answerCase(2, this, false)">Dengue fever</div>
+                                <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer" onclick="answerCase(2, this, true)">Chikungunya</div>
+                                <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer" onclick="answerCase(2, this, false)">Malaria</div>
+                            </div>
+                        </div>
+                        <div id="case-2-feedback" class="hidden mt-4 text-sm p-4 rounded-lg"></div>
+                     </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 14: CASE 3 -->
+            <div id="slide-14" class="slide flex-col items-center justify-center p-6 md:p-12">
+                <div class="w-full max-w-4xl">
+                     <div class="bg-slate-100/50 border border-slate-200 rounded-2xl p-6">
+                        <div class="flex items-center gap-4 mb-4">
+                            <span class="flex items-center justify-center w-10 h-10 rounded-full bg-purple-500 text-white font-bold text-lg">3</span>
+                            <h2 class="text-2xl font-bold font-display text-slate-900">Case: The Zebra</h2>
+                            <span class="ml-auto text-xs font-bold uppercase text-purple-600 bg-purple-100 px-3 py-1 rounded-full">Complex</span>
+                        </div>
+                        <div class="mb-6 p-4 bg-slate-200/50 rounded-lg text-slate-700">
+                           <strong>History:</strong> 42M, 3 weeks fever, night sweats, weight loss. Returned 8 weeks ago from rural Kenya. Exam shows splenomegaly. Malaria films are negative.
+                        </div>
+                        <div id="case-3-question">
+                            <p class="font-bold text-lg text-slate-900 mb-4">With a long incubation and splenomegaly, what's your top diagnosis?</p>
+                            <div class="space-y-3">
+                                <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer" onclick="answerCase(3, this, true)">Visceral Leishmaniasis</div>
+                                <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer" onclick="answerCase(3, this, false)">Tuberculosis</div>
+                                <div class="quiz-option p-4 rounded-lg border-2 border-slate-300 cursor-pointer" onclick="answerCase(3, this, false)">Lymphoma</div>
+                            </div>
+                        </div>
+                        <div id="case-3-feedback" class="hidden mt-4 text-sm p-4 rounded-lg"></div>
+                     </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 15: SYNTHESIS -->
+            <div id="slide-15" class="slide flex-col items-center justify-center p-6 md:p-12">
+                <div class="w-full max-w-4xl">
+                    <h2 class="text-3xl md:text-4xl font-bold font-display mb-2 text-slate-900 text-center">Synthesis & Action Planning</h2>
+                    <p class="text-lg mb-8 text-slate-600 text-center">Transform learning into practice.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-slate-100/50 border border-slate-200 rounded-2xl p-6">
+                             <h3 class="font-bold text-lg text-slate-900 mb-4">Your #1 Takeaway</h3>
+                             <textarea id="takeaway-input" class="w-full p-3 bg-white border-2 border-slate-300 rounded-lg text-slate-800 transition-all" rows="4" placeholder="What was the most important concept for you?"></textarea>
+                        </div>
+                        <div class="bg-slate-100/50 border border-slate-200 rounded-2xl p-6">
+                            <h3 class="font-bold text-lg text-slate-900 mb-4">My Action Plan</h3>
+                            <textarea id="action-plan-input" class="w-full p-3 bg-white border-2 border-slate-300 rounded-lg text-slate-800 transition-all" rows="4" placeholder="How will you apply this in your next case?"></textarea>
+                        </div>
+                    </div>
+                     <div class="text-center mt-6">
+                        <button id="ai-summary-btn" class="btn bg-emerald-500 hover:bg-emerald-600 text-white font-bold py-2 px-6 rounded-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                            Generate My Learning Summary
+                        </button>
+                    </div>
+                    <div id="ai-summary-container" class="hidden mt-4 p-4 bg-emerald-50 border border-emerald-200 rounded-lg text-left">
+                        <!-- AI summary will be injected here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- SLIDE 16: SESSION COMPLETE -->
+            <div id="slide-16" class="slide flex-col items-center justify-center p-6 md:p-12 text-center">
+                <div class="max-w-3xl">
+                    <div class="inline-flex items-center justify-center w-16 h-16 mb-6 bg-emerald-500/10 border border-emerald-500/20 rounded-2xl text-emerald-500 text-3xl">🎉</div>
+                    <h1 class="text-4xl md:text-6xl font-bold font-display mb-4 text-slate-900">Mission Complete!</h1>
+                    <p class="text-xl md:text-2xl mb-10 text-slate-600">You've mastered the systematic approach to fever in returned travelers.</p>
+                    <div class="bg-slate-100 border border-slate-200 rounded-2xl p-6 text-left mb-10">
+                        <h3 class="font-bold text-xl text-slate-900 mb-3">Key Takeaways</h3>
+                        <ul class="space-y-2 text-base text-slate-600">
+                           <li class="flex items-start gap-3"><span class="text-sky-500 mt-1">●</span><div><strong>Malaria is #1:</strong> Always rule out P. falciparum first in any traveler from an endemic region.</div></li>
+                           <li class="flex items-start gap-3"><span class="text-sky-500 mt-1">●</span><div><strong>Use the Framework:</strong> Systematically apply Timing, Geography (WATERS), and Syndromes to every case.</div></li>
+                           <li class="flex items-start gap-3"><span class="text-sky-500 mt-1">●</span><div><strong>VFRs are High-Risk:</strong> Travelers Visiting Friends and Relatives warrant the highest index of suspicion.</div></li>
+                        </ul>
+                    </div>
+                    <button id="restart-btn" class="btn bg-sky-500 hover:bg-sky-600 text-white font-bold py-3 px-8 rounded-lg text-lg transition-colors">Experience Again</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <div class="bg-white/80 backdrop-blur-sm border-t border-slate-200 p-3">
+            <div class="flex items-center justify-between max-w-7xl mx-auto">
+                <button id="prev-btn" class="btn bg-slate-200 hover:bg-slate-300 text-slate-700 px-5 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all">Previous</button>
+                <div class="flex-1 mx-4">
+                    <div class="flex justify-between items-center mb-1 text-xs text-slate-500">
+                        <span>Progress</span>
+                        <span id="progress-text">1 / 16</span>
+                    </div>
+                    <div class="w-full bg-slate-200 rounded-full h-2.5">
+                        <div id="progress-bar" class="progress-bar-inner h-2.5 rounded-full" style="width: 6.25%"></div>
+                    </div>
+                </div>
+                <button id="next-btn" class="btn bg-sky-500 hover:bg-sky-600 text-white px-5 py-2 rounded-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all">Next</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const state = {
+                currentSlide: 1,
+                totalSlides: 16,
+                slideCompleted: Array(16).fill(false),
+                timer: null,
+                completedDrags: 0,
+                selectedPopulation: null,
+                selectedRisk: null
+            };
+
+            // DOM Elements
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const startBtn = document.getElementById('start-btn');
+            const restartBtn = document.getElementById('restart-btn');
+            const progressBar = document.getElementById('progress-bar');
+            const progressText = document.getElementById('progress-text');
+
+            // --- CORE NAVIGATION ---
+            function updateUI() {
+                // Update slides
+                slides.forEach((slide, index) => {
+                    slide.classList.toggle('active', index + 1 === state.currentSlide);
+                });
+
+                // Update progress bar
+                const progressPercentage = (state.currentSlide / state.totalSlides) * 100;
+                progressBar.style.width = `${progressPercentage}%`;
+                progressText.textContent = `${state.currentSlide} / ${state.totalSlides}`;
+
+                // Update buttons
+                prevBtn.disabled = state.currentSlide === 1;
+                nextBtn.disabled = state.currentSlide === state.totalSlides;
+            }
+
+            function changeSlide(newSlide) {
+                if (newSlide >= 1 && newSlide <= state.totalSlides) {
+                    state.currentSlide = newSlide;
+                    updateUI();
+                    initializeSlide(newSlide);
+                }
+            }
+            
+            function initializeSlide(slideNumber) {
+                if(slideNumber === 2) startThinkingTimer();
+                if(slideNumber === 9) initFrameworkTabs();
+            }
+
+            // --- SLIDE-SPECIFIC LOGIC ---
+            
+            // Slide 2: Thinking Timer
+            function startThinkingTimer() {
+                if (state.timer) clearInterval(state.timer); // Prevent multiple timers
+                
+                if (document.getElementById('thinking-timer').textContent !== "Done!") {
+                    let timeLeft = 90;
+                    const timerElement = document.getElementById('thinking-timer');
+                    
+                    state.timer = setInterval(() => {
+                        timeLeft--;
+                        const minutes = Math.floor(timeLeft / 60);
+                        const seconds = timeLeft % 60;
+                        timerElement.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+                        
+                        if (timeLeft <= 0) {
+                            clearInterval(state.timer);
+                            timerElement.textContent = "Done!";
+                            document.getElementById('thinking-complete').classList.remove('hidden');
+                        }
+                    }, 1000);
+                }
+            }
+            
+            // Slide 6: Special Populations Quiz
+            window.selectPopulation = (element, type) => {
+                state.selectedPopulation = type;
+                document.querySelectorAll('#population-quiz .quiz-option[onclick^="selectPopulation"]').forEach(el => el.classList.remove('correct', 'incorrect'));
+                element.classList.add('correct');
+                checkPopulationMatch();
+            };
+            window.selectRisk = (element, type) => {
+                state.selectedRisk = type;
+                document.querySelectorAll('#population-quiz .quiz-option[onclick^="selectRisk"]').forEach(el => el.classList.remove('correct', 'incorrect'));
+                element.classList.add('correct');
+                checkPopulationMatch();
+            };
+            function checkPopulationMatch() {
+                if (state.selectedPopulation && state.selectedRisk) {
+                    const feedbackEl = document.getElementById('population-feedback');
+                    feedbackEl.classList.remove('hidden');
+                    if (state.selectedPopulation === state.selectedRisk) {
+                        feedbackEl.textContent = 'Correct! That is a key risk profile for this population.';
+                        feedbackEl.className = 'mt-4 text-sm p-4 rounded-lg text-center bg-emerald-100/60 border border-emerald-200 text-emerald-800';
+                        
+                        // Disable matched options
+                        document.querySelector(`.quiz-option[onclick="selectPopulation(this, '${state.selectedPopulation}')"]`).style.pointerEvents = 'none';
+                        document.querySelector(`.quiz-option[onclick="selectRisk(this, '${state.selectedRisk}')"]`).style.pointerEvents = 'none';
+
+                    } else {
+                        feedbackEl.textContent = 'Not quite a match. Think about the typical exposures for that group.';
+                        feedbackEl.className = 'mt-4 text-sm p-4 rounded-lg text-center bg-red-100/60 border border-red-200 text-red-800';
+                    }
+                    // Reset selection after a short delay
+                    setTimeout(() => {
+                        if (state.selectedPopulation !== state.selectedRisk) {
+                           document.querySelectorAll('#population-quiz .quiz-option').forEach(el => el.classList.remove('correct', 'incorrect'));
+                        }
+                        state.selectedPopulation = null;
+                        state.selectedRisk = null;
+                        feedbackEl.classList.add('hidden');
+                    }, 2000);
+                }
+            }
+
+            // Slide 7: Eschar Quiz
+            window.answerEschar = (element, isCorrect) => {
+                document.querySelectorAll('#eschar-question .quiz-option').forEach(opt => opt.style.pointerEvents = 'none');
+                const feedbackEl = document.getElementById('eschar-feedback');
+                feedbackEl.classList.remove('hidden');
+
+                if (isCorrect) {
+                    element.classList.add('correct');
+                    feedbackEl.innerHTML = '<strong>Correct!</strong> An eschar is a classic sign of a rickettsial infection. <br><strong>Clinical Pearl:</strong> Always perform a thorough skin exam, checking moist, covered areas like the groin, perineum, and axillae where eschars are often hidden.';
+                    feedbackEl.className = 'mt-4 text-sm p-4 rounded-lg bg-emerald-100/60 border border-emerald-200 text-emerald-800';
+                } else {
+                    element.classList.add('incorrect');
+                    feedbackEl.innerHTML = 'Incorrect. While other infections cause skin lesions, a painless eschar is highly specific for a mite or tick bite associated with rickettsial disease.';
+                    feedbackEl.className = 'mt-4 text-sm p-4 rounded-lg bg-red-100/60 border border-red-200 text-red-800';
+                }
+            };
+            
+            // Slide 9: Framework Tabs & Interactions
+            function initFrameworkTabs() {
+                const tabs = document.querySelectorAll('.framework-tab-button');
+                const contents = document.querySelectorAll('.framework-tab-content');
+
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', () => {
+                        tabs.forEach(t => {
+                            t.classList.remove('active', 'text-sky-500', 'border-sky-500');
+                            t.classList.add('text-slate-500', 'border-transparent');
+                        });
+                        tab.classList.add('active', 'text-sky-500', 'border-sky-500');
+                        tab.classList.remove('text-slate-500', 'border-transparent');
+                        
+                        contents.forEach(c => c.classList.add('hidden'));
+                        document.getElementById(tab.dataset.tab).classList.remove('hidden');
+                    });
+                });
+                initDragDrop();
+            }
+
+            function initDragDrop() {
+                const dragItems = document.querySelectorAll('.drag-item');
+                const dropZones = document.querySelectorAll('.drop-zone');
+                
+                dragItems.forEach(item => {
+                    item.addEventListener('dragstart', e => e.dataTransfer.setData('text/plain', item.dataset.disease));
+                });
+                
+                dropZones.forEach(zone => {
+                    zone.addEventListener('dragover', e => {
+                        e.preventDefault();
+                        zone.classList.add('drag-over');
+                    });
+                    zone.addEventListener('dragleave', () => zone.classList.remove('drag-over'));
+                    zone.addEventListener('drop', e => {
+                        e.preventDefault();
+                        zone.classList.remove('drag-over');
+                        const disease = e.dataTransfer.getData('text/plain');
+                        const draggedEl = document.querySelector(`[data-disease="${disease}"]`);
+                        
+                        if (draggedEl.dataset.correct === zone.dataset.period) {
+                            zone.appendChild(draggedEl);
+                            draggedEl.draggable = false;
+                            draggedEl.classList.add('bg-emerald-100', 'border-emerald-300', 'cursor-default');
+                            draggedEl.classList.remove('bg-white', 'border-slate-300');
+                            state.completedDrags++;
+                            if (state.completedDrags === 4) {
+                                document.getElementById('timing-feedback').classList.remove('hidden');
+                                document.getElementById('timing-pearl').classList.remove('hidden');
+                            }
+                        } else {
+                            draggedEl.classList.add('incorrect');
+                            setTimeout(() => draggedEl.classList.remove('incorrect'), 500);
+                        }
+                    });
+                });
+            }
+
+            window.checkGeoAnswer = (element, isCorrect) => {
+                 if (isCorrect) {
+                    element.classList.add('correct');
+                    document.getElementById('geo-feedback').classList.remove('hidden');
+                     document.getElementById('geo-pearl').classList.remove('hidden');
+                    document.querySelectorAll('#geo-quiz-container .quiz-option').forEach(el => el.style.pointerEvents = 'none');
+                } else {
+                    element.classList.add('incorrect');
+                }
+            };
+            
+            // Slides 12, 13, 14: Case Quizzes
+            window.answerCase = (caseNum, element, isCorrect) => {
+                const options = document.querySelectorAll(`#slide-${caseNum + 11} .quiz-option`);
+                options.forEach(opt => opt.style.pointerEvents = 'none');
+                
+                const feedbackEl = document.getElementById(`case-${caseNum}-feedback`);
+                
+                const feedbackMessages = {
+                    1: {
+                        correct: 'Correct! Classic presentation for P. falciparum. Blood films are essential. Learning Point: Parasitemia >2% or any signs of end-organ damage (e.g., confusion, renal failure) indicate severe malaria requiring urgent IV therapy.',
+                        incorrect: 'Incorrect. While other diagnoses are possible, the history strongly points to the most urgent threat: Malaria.'
+                    },
+                    2: {
+                        correct: 'Excellent! The severe, symmetrical polyarthritis is the hallmark of Chikungunya. Learning Point: While both are Aedes-transmitted, Chikungunya\'s defining feature is arthritis, whereas Dengue is known for retro-orbital pain and hemorrhage risk (thrombocytopenia).',
+                        incorrect: 'Incorrect. While Dengue can cause joint pain, it\'s typically not as severe or disabling as described here.'
+                    },
+                    3: {
+                        correct: 'Spot on! The long incubation, travel to East Africa, and splenomegaly are classic for Visceral Leishmaniasis. Learning Point: This highlights why a detailed exposure history (rural stay, specific activities) is critical when initial tests for common pathogens are negative.',
+                        incorrect: 'Incorrect. This presentation is a classic for a specific protozoan infection common in that region.'
+                    }
+                };
+
+                element.classList.add(isCorrect ? 'correct' : 'incorrect');
+                feedbackEl.innerHTML = isCorrect ? feedbackMessages[caseNum].correct : feedbackMessages[caseNum].incorrect;
+                feedbackEl.className = `mt-4 text-sm p-4 rounded-lg ${isCorrect ? 'bg-emerald-100/60 border border-emerald-200 text-emerald-800' : 'bg-red-100/60 border border-red-200 text-red-800'}`;
+            };
+
+            // Slides 4, 10: SCTs
+            window.answerSCT = (sctNum, element, score) => {
+                const options = document.querySelectorAll(`#sct-${sctNum}-options .quiz-option`);
+                options.forEach(opt => {
+                    opt.style.pointerEvents = 'none';
+                    opt.classList.remove('correct');
+                });
+                element.classList.add('correct');
+
+                const feedbackEl = document.getElementById(`sct-${sctNum}-feedback`);
+                const feedbackMessages = {
+                    1: {
+                        text: '<strong>Expert Consensus: No Change (0) or Less Likely (-1).</strong> While perfect adherence makes breakthrough malaria less common, it is never impossible due to potential resistance or counterfeit drugs. Prophylaxis can also blunt symptoms, making the presentation atypical. The golden rule stands: you must still test for malaria.',
+                        class: 'bg-amber-100/60 border border-amber-200 text-amber-800'
+                    },
+                    2: {
+                        text: '<strong>Expert Consensus: Much More Likely (+2).</strong> This new information is extremely powerful. The exposure (freshwater lake in SEA), incubation period (4 weeks), and key lab finding (eosinophilia) form a classic triad for acute schistosomiasis (Katayama Fever).',
+                         class: 'bg-emerald-100/60 border border-emerald-200 text-emerald-800'
+                    }
+                };
+                
+                feedbackEl.innerHTML = feedbackMessages[sctNum].text;
+                feedbackEl.className = `mt-4 text-sm p-4 rounded-lg ${feedbackMessages[sctNum].class}`;
+            };
+
+
+            // --- EVENT LISTENERS ---
+            nextBtn.addEventListener('click', () => {
+                changeSlide(state.currentSlide + 1);
+            });
+            prevBtn.addEventListener('click', () => changeSlide(state.currentSlide - 1));
+            startBtn.addEventListener('click', () => {
+                changeSlide(2);
+            });
+            restartBtn.addEventListener('click', () => {
+                window.location.reload();
+            });
+            
+            // Keyboard nav
+            document.addEventListener('keydown', e => {
+                if (e.target.tagName === 'TEXTAREA') return;
+                if (e.key === 'ArrowRight' && !nextBtn.disabled) nextBtn.click();
+                if (e.key === 'ArrowLeft' && !prevBtn.disabled) prevBtn.click();
+            });
+
+            // --- GEMINI API INTEGRATION ---
+
+            async function callGemini(prompt, retries = 3, delay = 1000) {
+                const apiKey = ""; // API key is handled by the environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                };
+
+                try {
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    if (!response.ok) {
+                        if (response.status === 429 && retries > 0) {
+                            await new Promise(res => setTimeout(res, delay));
+                            return callGemini(prompt, retries - 1, delay * 2); 
+                        }
+                        throw new Error(`API request failed with status ${response.status}`);
+                    }
+
+                    const result = await response.json();
+                    const candidate = result.candidates?.[0];
+                    if (candidate && candidate.content?.parts?.[0]?.text) {
+                        return candidate.content.parts[0].text;
+                    } else {
+                        return "Sorry, I couldn't generate a response. The model's output was empty.";
+                    }
+                } catch (error) {
+                    console.error("Gemini API call failed:", error);
+                    return `An error occurred while contacting the AI assistant: ${error.message}. Please check the console for details.`;
+                }
+            }
+
+            // Slide 2 AI Feedback Logic
+            const reflectionInput = document.getElementById('reflection-1');
+            const aiFeedbackBtn = document.getElementById('ai-feedback-btn');
+            const aiResponseContainer = document.getElementById('ai-response-container');
+
+            reflectionInput.addEventListener('input', () => {
+                if (reflectionInput.value.trim().length > 10) {
+                    aiFeedbackBtn.classList.remove('hidden');
+                } else {
+                    aiFeedbackBtn.classList.add('hidden');
+                }
+            });
+
+            aiFeedbackBtn.addEventListener('click', async () => {
+                const userText = reflectionInput.value;
+                aiFeedbackBtn.disabled = true;
+                aiFeedbackBtn.textContent = 'Consulting AI...';
+                aiResponseContainer.classList.remove('hidden');
+                aiResponseContainer.innerHTML = '<div class="flex items-center justify-center"><div class="animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-500"></div><span class="ml-3">Generating feedback...</span></div>';
+
+                const systemPrompt = `You are a senior infectious disease consultant providing feedback to a junior colleague.
+                Case: A 25-year-old construction worker returns from South India with high fever.
+                Colleague's initial thoughts: "${userText}"
+                
+                Your task:
+                1. Acknowledge their initial thoughts positively.
+                2. Provide a concise, bulleted list of 3-5 additional high-yield differential diagnoses they should consider.
+                3. For each differential, provide a very brief (1-sentence) rationale.
+                4. Conclude by suggesting one single most critical next investigation.
+                Format your response using Markdown. Use bold for headings.`;
+
+                const aiResponse = await callGemini(systemPrompt);
+                
+                // A simple markdown to HTML converter
+                let formattedResponse = aiResponse
+                    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold
+                    .replace(/\n/g, '<br>') // Newlines
+                    .replace(/(\*|\-)\s(.*?)(<br>|$)/g, '<li class="ml-4" style="list-style-type: disc;">$2</li>'); // Bullets
+                
+                aiResponseContainer.innerHTML = `<h4 class="font-bold text-lg text-indigo-800 mb-2">AI Consultant's Feedback:</h4><ul class="space-y-1">${formattedResponse}</ul>`;
+                aiFeedbackBtn.textContent = 'Feedback Received';
+            });
+
+            // Slide 15 AI Summary Logic
+            const takeawayInput = document.getElementById('takeaway-input');
+            const actionPlanInput = document.getElementById('action-plan-input');
+            const aiSummaryBtn = document.getElementById('ai-summary-btn');
+            const aiSummaryContainer = document.getElementById('ai-summary-container');
+
+            function checkSummaryInputs() {
+                aiSummaryBtn.disabled = !(takeawayInput.value.trim().length > 10 && actionPlanInput.value.trim().length > 10);
+            }
+            takeawayInput.addEventListener('input', checkSummaryInputs);
+            actionPlanInput.addEventListener('input', checkSummaryInputs);
+
+            aiSummaryBtn.addEventListener('click', async () => {
+                aiSummaryBtn.disabled = true;
+                aiSummaryBtn.textContent = 'Generating Summary...';
+                aiSummaryContainer.classList.remove('hidden');
+                aiSummaryContainer.innerHTML = '<div class="flex items-center justify-center"><div class="animate-spin rounded-full h-6 w-6 border-b-2 border-emerald-500"></div><span class="ml-3">Synthesizing your notes...</span></div>';
+                
+                const summaryPrompt = `You are a medical education assistant. A learner has completed a module on "Fever in a Returned Traveler" and provided their reflections.
+                Their #1 takeaway: "${takeawayInput.value}"
+                Their action plan: "${actionPlanInput.value}"
+
+                Your task:
+                1. Synthesize these points into a concise, encouraging "Personalized Learning Summary".
+                2. Frame it as a confirmation of their learning and a plan for future practice.
+                3. Keep it to one short paragraph.
+                Format as a single paragraph of text.`;
+                
+                const summaryResponse = await callGemini(summaryPrompt);
+                aiSummaryContainer.innerHTML = `<h4 class="font-bold text-lg text-emerald-800 mb-2">Your Personalized Learning Summary:</h4><p class="text-emerald-900">${summaryResponse}</p>`;
+                aiSummaryBtn.textContent = 'Summary Generated';
+            });
+
+
+            // --- INITIALIZATION ---
+            updateUI();
+        });
+    </script>
+</body>
+</html>
+
